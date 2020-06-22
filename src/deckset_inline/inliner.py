@@ -74,7 +74,7 @@ class InlineDirective:
         """
         if self.type == TagType.OPENING:
             if self.source is None:
-                self.raise_error(f"Source attribute must be present in directive")
+                self.raise_error("Source attribute must be present in directive")
             if not isinstance(self.source, str):
                 self.raise_error(f"Invalid type {type(self.source)} for source attribute")
             self.source = Path(self.source)

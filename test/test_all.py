@@ -1,10 +1,10 @@
-import os
 import tempfile
 import textwrap
 
 import pytest
 
 from deckset_inline.inliner import check, InlineError, result_generator
+
 
 def write_lines_to_file(fileobj, num_lines, line_template=None):
     if line_template is None:
@@ -13,12 +13,14 @@ def write_lines_to_file(fileobj, num_lines, line_template=None):
         fileobj.write(line_template.format(i + 1) + "\n")
     fileobj.flush()
 
+
 def test_check_ok():
     file = [
         "line 1",
         "line 2"
     ]
     check(file, clean=False)
+
 
 def test_check_closing_not_found():
     file = [
@@ -28,6 +30,7 @@ def test_check_closing_not_found():
     with pytest.raises(InlineError) as exc_info:
         check(file, clean=False)
         assert "Directive not closed at end of file" in str(exc_info.value)
+
 
 def test_inline_basic():
     with tempfile.NamedTemporaryFile("w") as ftmp:
@@ -48,6 +51,7 @@ def test_inline_basic():
             <!-- </inline> -->
             tail
             """)
+
 
 def test_inline_verbatim():
     with tempfile.NamedTemporaryFile("w") as ftmp:
@@ -71,6 +75,7 @@ def test_inline_verbatim():
             tail
             """)
 
+
 def test_inline_with_start():
     with tempfile.NamedTemporaryFile("w") as ftmp:
         write_lines_to_file(ftmp, 10)
@@ -91,6 +96,7 @@ def test_inline_with_start():
             <!-- </inline> -->
             tail
             """)
+
 
 def test_inline_with_end():
     with tempfile.NamedTemporaryFile("w") as ftmp:
@@ -113,6 +119,7 @@ def test_inline_with_end():
             tail
             """)
 
+
 def test_inline_with_start_and_end():
     with tempfile.NamedTemporaryFile("w") as ftmp:
         write_lines_to_file(ftmp, 10)
@@ -134,6 +141,7 @@ def test_inline_with_start_and_end():
             tail
             """)
 
+
 def test_inline_clean():
     with tempfile.NamedTemporaryFile("w") as ftmp:
         write_lines_to_file(ftmp, 10)
@@ -151,6 +159,7 @@ def test_inline_clean():
             <!-- </inline> -->
             tail
             """)
+
 
 def test_inline_lang():
     with tempfile.NamedTemporaryFile("w") as ftmp:
