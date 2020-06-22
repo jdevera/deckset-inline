@@ -36,12 +36,10 @@ See how your file has been modified *in-place*, and you now have the lines 2 to 
 
 ````markdown
 <!-- <inline src="a_file.py" verbatim lang="python" start="2" end="3"> -->
-
 ```python
 print("This second line, though, is vital for any presentation.")
 print("This third line should be included too.")
 ```
-
 <!-- </inline> -->
 ````
 
