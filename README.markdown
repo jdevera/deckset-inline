@@ -7,7 +7,7 @@ Include content from other files in your Deckset slides.
 First install the tool:
 
 ```bash
-pip install deckset-inliner
+pip install deckset-inline
 ```
 
 Then prepare a file from which you want to include some content. This is `a_file.py`:
@@ -29,7 +29,7 @@ Then add an opening `inline` *directive* and a closing `inline` *directive* to y
 Then run the tool with your presentation file:
 
 ```bash
-deckset-inliner --in-place --backup-ext bak slides.md
+deckset-inline --in-place --backup-ext bak slides.md
 ```
 
 See how your file has been modified *in-place*, and you now have the lines 2 to 3 of `a_file.py` included between the directives:
