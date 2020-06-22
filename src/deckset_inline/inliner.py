@@ -72,30 +72,35 @@ class InlineDirective:
         """
         Validate all parsed attributes of the directive.
         """
-        if self.type == TagType.OPENING:
-            if self.source is None:
-                self.raise_error("Source attribute must be present in directive")
-            if not isinstance(self.source, str):
-                self.raise_error(f"Invalid type {type(self.source)} for source attribute")
-            self.source = Path(self.source)
-            if not self.source.exists():
-                self.raise_error(f"File {self.source} not found")
-            try:
-                with self.source.open("r"):
-                    pass
-            except Exception as ex:
-                self.raise_error(str(ex))
+        if self.type != TagType.OPENING:
+            return
 
-            if self.start is not None:
-                try:
-                    self.start = int(self.start)
-                except ValueError:
-                    self.raise_error(f"Invalid value {self.start} for start attribute")
-            if self.end is not None:
-                try:
-                    self.end = int(self.end)
-                except ValueError:
-                    self.raise_error(f"Invalid value {self.end} for end attribute")
+        self.validate_source()
+
+        if self.start is not None:
+            try:
+                self.start = int(self.start)
+            except ValueError:
+                self.raise_error(f"Invalid value {self.start} for start attribute")
+        if self.end is not None:
+            try:
+                self.end = int(self.end)
+            except ValueError:
+                self.raise_error(f"Invalid value {self.end} for end attribute")
+
+    def validate_source(self):
+        if self.source is None:
+            self.raise_error("Source attribute must be present in directive")
+        if not isinstance(self.source, str):
+            self.raise_error(f"Invalid type {type(self.source)} for source attribute")
+        self.source = Path(self.source)
+        if not self.source.exists():
+            self.raise_error(f"File {self.source} not found")
+        try:
+            with self.source.open("r"):
+                pass
+        except Exception as ex:
+            self.raise_error(str(ex))
 
     def contents(self) -> Generator[str, None, None]:
         """
